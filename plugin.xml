@@ -45,7 +45,7 @@
         <source-file src="src/android/IsDirtyActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers"/>
         <source-file src="src/android/IsKeyGenRequiredActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
         <source-file src="src/android/JacksonSerializedResult.java" target-dir="src/com/jsonstore/types" />
-        <source-file src="src/android/JSONStoreParameterType.java.java" target-dir="src/com/jsonstore/types" />
+        <source-file src="src/android/JSONStoreParameterType.java" target-dir="src/com/jsonstore/types" />
         <source-file src="src/android/JSONStoreParamRequirements.java" target-dir="src/com/jsonstore/types" />
         <source-file src="src/android/LocalCountActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
 
