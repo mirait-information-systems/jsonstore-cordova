@@ -1,0 +1,5 @@
+dependencies {
+	compile 'com.google.guava:guava:14.0.1'
+    compile 'org.codehaus.jackson:jackson-jaxrs:1.9.13'
+}
+ 

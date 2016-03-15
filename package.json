@@ -1,0 +1,34 @@
+{
+  "name": "cordova-plugin-jsonstore",
+  "version": "1.0.11",
+  "description": "Cordova Plugin for JSONStore",
+  "cordova": {
+    "id": "cordova-plugin-jsonstore",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "IBM Bluemix Mobile Services",
+  "license": "Apache version 2.0",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core/issues"
+  },
+  "homepage": "https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-cordova-plugin-core#readme",
+  "contributors": [
+    {
+      "name": "Nana Amfo",
+      "email": "noamfo@us.ibm.com"
+    }
+  ]
+}

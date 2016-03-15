@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-jsonstore-plugin" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>JSONStore</name>
+
+    <js-module name="JSONStore" src="www/jsonstore.js">
+        <clobbers target="JSONStore"/>
+    </js-module>
+
+    
+    <platform name="android">
+        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        </config-file>
+
+        <config-file parent="/*" target="res/xml/config.xml">
+            
+            <feature name="StoragePlugin">
+                <param name="android-package" value="com.jsonstore.dispatchers"/>
+            </feature>
+        </config-file>
+
+        <config-file parent="/*" target="AndroidManifest.xml"/>
+
+        <source-file src="src/android/ActionDispatcher.java" target-dir="src/com/jsonstore/types"/>
+        <source-file src="src/android/AdvancedFindActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/AllDirtyActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/BaseActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/BaseDatabaseActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/ChangeActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/ChangePasswordActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers"/>
+        <source-file src="src/android/ClearActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/CloseDatabaseActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/CommitTransactionActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/CountActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/DestroyDBFileAndKeychainActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+
+        <source-file src="src/android/DispatchingPlugin.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/DropTableActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/FileInfoActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/FindActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/FindByIdActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/IsDirtyActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers"/>
+        <source-file src="src/android/IsKeyGenRequiredActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/JacksonSerializedResult.java" target-dir="src/com/jsonstore/types" />
+        <source-file src="src/android/JSONStoreParameterType.java.java" target-dir="src/com/jsonstore/types" />
+        <source-file src="src/android/JSONStoreParamRequirements.java" target-dir="src/com/jsonstore/types" />
+        <source-file src="src/android/LocalCountActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+
+        <source-file src="src/android/MarkCleanActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/ProvisionActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/RemoveActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/ReplaceActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/RollbackTransactionActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers"/>
+        <source-file src="src/android/StartTransactionActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/StoragePlugin.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/StoreActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/StoreDPKActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+
+            <feature name="StoragePlugin">
+                <param name="ios-package" value="StoragePlugin"/>
+            </feature>
+            
+        </config-file>
+
+        <header-file src="src/ios/StoragePlugin.h" />
+    </platform>
+
+</plugin>
