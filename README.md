@@ -84,8 +84,329 @@ cordova plugin list
 ### 4. Configuring your platform
 #### Configuring Your iOS Environment 
 
+1. Build your iOS project by running the following command:
+
+```Bash
+cordova build ios
+```
+
+#### Configuring your Android Environment
+
 1. Build your Android project by running the following command:
 
 ```Bash
 cordova build android
 ```
+
+
+#### API References
+
+**Note on Security**: By default security has been disabled so please review this blog post to enable its usage in JSONStore.
+
+
+
+1. Initialize and open connections, get an Accessor, and add data
+
+        var collectionName = 'people';
+        
+        // Object that defines all the collections.
+        var collections = {
+            // Object that defines the 'people' collection.
+            people : {
+                // Object that defines the Search Fields for the 'people' collection.
+                searchFields : {name: 'string', age: 'integer'}
+            }
+        };
+        // Optional options object.
+        var options = {
+            // Optional username, default 'jsonstore'.
+            username : 'saito',
+            // Optional password, default no password.
+            password : '123',
+        };
+
+        JSONStore.init(collections, options)
+            .then(function () {
+                // Data to add, you probably want to get
+                // this data from a network call
+                var data = [{name: 'saito', age: 10}];
+
+                // Optional options for add.
+                var addOptions = {
+                    // Mark data as dirty (true = yes, false = no), default true.
+                    markDirty: true
+                };
+                // Get an accessor to the people collection and add data.
+                return JSONStore.get(collectionName).add(data, addOptions);
+        })
+        .then(function (numberOfDocumentsAdded) {
+            // Add was successful.
+        })
+        .fail(function (errorObject) {
+            // Handle failure for any of the previous JSONStore operations (init, add).
+        });
+        
+2. Find - locate documents inside the Store
+    
+        var collectionName = 'people';
+
+        // Find all documents that match the queries.
+        var queryPart1 = JSONStore.QueryPart()
+                   .equal('name', 'ayumu')
+                   .lessOrEqualThan('age', 10)
+
+        var options = {
+            // Returns a maximum of 10 documents, default no limit.
+            limit: 10,
+            // Skip 0 documents, default no offset.
+            offset: 0,
+            // Search fields to return, default: ['_id', 'json'].
+            filter: ['_id', 'json'],
+            // How to sort the returned values, default no sort.
+            sort: [{name: constant.ASCENDING}, {age: constant.DESCENDING}]
+        };
+        
+        JSONStore.get(collectionName)
+        // Alternatives:
+        // - findById(1, options) which locates documents by their _id field
+        // - findAll(options) which returns all documents
+        // - find({'name': 'nana', age: 10}, options) which finds all documents
+        // that match the query.
+            .advancedFind([queryPart1], options)
+                .then(function (arrayResults) {
+                    // arrayResults = [{_id: 1, json: {name: 'carlos', age: 99}}]
+            })
+            .fail(function (errorObject) {
+                // Handle failure.
+            });
+            
+3. Replace - change the documents that are already stored inside a Collection
+
+        var collectionName = 'people';
+        
+        // Documents will be located with their '_id' field 
+        // and replaced with the data in the 'json' field.
+        var docs = [{_id: 1, json: {name: 'hayatashin', age: 99}}];
+
+        var options = {
+            // Mark data as dirty (true = yes, false = no), default true.
+            markDirty: true
+        };
+
+        JSONStore.get(collectionName)
+            .replace(docs, options)
+                .then(function (numberOfDocumentsReplaced) {
+                    // Handle success.
+            })
+            .fail(function (errorObject) {
+                // Handle failure.
+            }); 
+
+4. Remove - delete all documents that match the query
+
+        var collectionName = 'people';
+        // Remove all documents that match the queries.
+        var queries = [{_id: 1}];
+
+        var options = {
+            // Exact match (true) or fuzzy search (false), default fuzzy search.
+            exact: true,
+            // Mark data as dirty (true = yes, false = no), default true.
+            markDirty: true
+        };
+
+        JSONStore.get(collectionName)
+            .remove(queries, options)
+                .then(function (numberOfDocumentsRemoved) {
+                    // Handle success.
+                })
+                .fail(function (errorObject) {
+                    // Handle failure.
+                });
+                
+                
+5. Count - gets the total number of documents that match a query
+    
+        var collectionName = 'people';
+        // Count all documents that match the query.
+        // The default query is '{}' which will 
+        // count every document in the collection.
+        var query = {name: 'shin'}; 
+        var options = {
+            // Exact match (true) or fuzzy search (false), default fuzzy search.
+            exact: true
+        };
+
+        JSONStore.get(collectionName)
+            .count(query, options)
+                .then(function (numberOfDocumentsThatMatchedTheQuery) {
+                    // Handle success.
+                })
+                .fail(function (errorObject) {
+                    // Handle failure.
+                });
+                
+6. Destroy - wipes data for all users, destroys the internal storage, and clears security artifacts
+
+        JSONStore.destroy()
+            .then(function () {
+                // Handle success.
+            })
+            .fail(function (errorObject) {
+                // Handle failure.
+            });
+            
+7. Security - close access to all opened Collections for the current user
+
+        JSONStore.closeAll()
+            .then(function () {
+                // Handle success.
+            })
+            .fail(function (errorObject) {
+                // Handle failure.
+            }); 
+
+8. Security - change the password that is used to access a Store
+    
+        // The password should be user input. 
+        // It is hard-coded in the example for brevity.
+        var oldPassword = '123';
+        var newPassword = '456';
+
+        var clearPasswords = function () {
+            oldPassword = null;
+            newPassword = null;
+        };
+
+        // Default username if none is passed is: 'jsonstore'.
+        var username = 'kenshin';
+
+        JSONStore.changePassword(oldPassword, newPassword, username)
+            .then(function () {
+                // Make sure you do not leave the password(s) in memory.
+                clearPasswords();
+                // Handle success.
+            })
+            .fail(function (errorObject) {
+                // Make sure you do not leave the password(s) in memory.
+                clearPasswords();
+                // Handle failure.
+            }); 
+            
+9. Check whether a document is dirty
+
+        var collectionName = 'people';
+        var doc = {_id: 1, json: {name: 'hoshikata', age: 99}};
+
+        JSONStore.get(collectionName)  
+            .isDirty(doc)
+                .then(function (isDocumentDirty) {
+                    // Handle success.
+                    // isDocumentDirty - true if dirty, false otherwise.
+                })
+                .fail(function (errorObject) {
+                    // Handle failure.
+                });
+                
+10. Check the number of dirty documents
+
+        var collectionName = 'people';
+        JSONStore.get(collectionName)  
+            .countAllDirty()
+                .then(function (numberOfDirtyDocuments) {
+                    // Handle success.
+                })
+                .fail(function (errorObject) {
+                    // Handle failure.
+                });
+                
+11. Remove a collection
+
+        var collectionName = 'people';
+
+        JSONStore.get(collectionName)
+            .removeCollection()
+                .then(function () {
+                    // Handle success.
+                    // Note: You must call the 'init' API to re-use the empty collection.
+                    // See the 'clear' API if you just want to remove all data that is inside.
+                })  
+                .fail(function (errorObject) {
+                    // Handle failure.
+                });
+                
+12. Clear all data that is in a collection
+
+        var collectionName = 'people';
+        JSONStore.get(collectionName)
+            .clear()
+                .then(function () {
+                    // Handle success.
+                    // Note: You might want to use the 'removeCollection' API
+                    // instead if you want to change the search fields.
+                })
+                .fail(function (errorObject) {
+                    // Handle failure.
+                }); 
+                
+13. Start a transaction, add some data, remove a document, commit the transaction and roll back the transaction if there is a failure
+
+        JSONStore.startTransaction()
+            .then(function () {
+                // Handle startTransaction success.
+                // You can call every JSONStore API method except:
+                // init, destroy, removeCollection, and closeAll.
+
+                var data = [{name: 'junko'}];
+                return JSONStore.get(collectionName).add(data);
+            })
+            .then(function () {
+                    var docs = [{_id: 1, json: {name: 'junko'}}];
+                    return JSONStore.get(collectionName).remove(docs);
+            })
+            .then(function () {
+                return JSONStore.commitTransaction();
+            })
+            .fail(function (errorObject) {
+                // Handle failure for any of the previous JSONStore operation.
+                //(startTransaction, add, remove).
+                JSONStore.rollbackTransaction()
+                    .then(function () {
+                        // Handle rollback success.
+                    })
+                    .fail(function () {
+                        // Handle rollback failure.
+                    })
+            });
+            
+15. Get file information
+
+        JSONStore.fileInfo()
+            .then(function (res) {
+                //res => [{isEncrypted : true, name : kyo, size : 3072}]
+            })
+            .fail(function () {
+                // Handle failure.
+            }); 
+            
+16. Search with like, rightLike, and leftLike
+    
+        // Match all records that contain the search string on both sides.
+        // %searchString%
+        var arr1 = JSONStore.QueryPart().like('name', 'ca');  // returns {name: 'carlos', age: 10}
+        var arr2 = WL.JSONStore.QueryPart().like('name', 'los');  // returns {name: 'carlos', age: 10}
+
+        // Match all records that contain the search string on the left side and anything on the right side.
+        // searchString%
+        var arr1 = WL.JSONStore.QueryPart().rightLike('name', 'ca');  // returns {name: 'carlos', age: 10}
+        var arr2 = WL.JSONStore.QueryPart().rightLike('name', 'los');  // returns nothing
+
+        // Match all records that contain the search string on the right side and anything on the left side.
+        // %searchString
+        var arr = WL.JSONStore.QueryPart().leftLike('name', 'ca');  // returns nothing
+        var arr2 = WL.JSONStore.QueryPart().leftLike('name', 'los');  // returns {name: 'carlos', age: 10}
+
+# License
+
+This project is licensed under the terms of the Apache 2 license.
+> You can find the license [here](https://github.com/ibm-bluemix-mobile-services/jsonstore-android/blob/development/LICENSE).
