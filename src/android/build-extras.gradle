@@ -1,5 +1,20 @@
+buildscript {
+    repositories {
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    }
+
+}
 dependencies {
-	compile 'com.google.guava:guava:14.0.1'
-    compile 'org.codehaus.jackson:jackson-jaxrs:1.9.13'
+    compile ('com.ibm.mobilefirstplatform.clientsdk.android:jsonstore:1.0.0-SNAPSHOT@aar'){
+    	transitive = true
+    }
 }
  
+
+android {
+    packagingOptions {
+        pickFirst 'META-INF/ASL2.0'
+        pickFirst 'META-INF/LICENSE'
+        pickFirst 'META-INF/NOTICE'
+    }
+}

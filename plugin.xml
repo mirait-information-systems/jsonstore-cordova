@@ -3,9 +3,26 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
     <name>JSONStore</name>
 
+      <js-module name="JQuery" src="www/libs/jquery.js">
+        <clobbers target="jQuery" />
+        <clobbers target="$" />
+    </js-module>
+
+
+     <js-module name="_" src="www/libs/jsonstore_lodash.js">
+         <clobbers target="_" />
+    </js-module>
+
     <js-module name="JSONStore" src="www/jsonstore.js">
         <clobbers target="JSONStore"/>
     </js-module>
+
+   
+  
+
+   
+
+
 
     
     <platform name="android">
@@ -18,7 +35,7 @@
         <config-file parent="/*" target="res/xml/config.xml">
             
             <feature name="StoragePlugin">
-                <param name="android-package" value="com.jsonstore.dispatchers"/>
+                <param name="android-package" value="com.jsonstore.dispatchers.StoragePlugin"/>
             </feature>
         </config-file>
 
@@ -47,6 +64,7 @@
         <source-file src="src/android/JacksonSerializedResult.java" target-dir="src/com/jsonstore/types" />
         <source-file src="src/android/JSONStoreParameterType.java" target-dir="src/com/jsonstore/types" />
         <source-file src="src/android/JSONStoreParamRequirements.java" target-dir="src/com/jsonstore/types" />
+        <source-file src="src/android/JSONStoreContext.java" target-dir="src/com/jsonstore/types" />
         <source-file src="src/android/LocalCountActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
 
         <source-file src="src/android/MarkCleanActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />

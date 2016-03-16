@@ -1,9 +1,48 @@
-/*globals $, JSONStore_, cordova, sjcl, setTimeout, document, localStorage, JSONStoreWin8, ArrayBuffer */
+/*globals $, JSONStore, cordova, sjcl, setTimeout, document, localStorage, JSONStoreWin8, ArrayBuffer */
 /*jshint camelcase:false, maxparams:4*/
 
 
+var JSONStore = (function(_) {
+
+  /*jshint strict:false*/
+
+  var publicAPI = [
+    'init',
+    'get',
+    'initCollection',
+    'usePassword',
+    'clearPassword',
+    'closeAll',
+    'documentify',
+    'changePassword',
+    'destroy',
+    'getErrorMessage',
+    'startTransaction',
+    'commitTransaction',
+    'rollbackTransaction',
+    'fileInfo',
+    'QueryPart'
+  ];
+
+  var stub = {};
+
+  _.each(publicAPI, function(apiName) {
+    var implName = apiName;
+    stub[apiName] =
+      (function(apiName, implName) {
+      return function() {
+          return _JSONStoreImpl[implName].apply(_JSONStoreImpl, arguments);
+      };
+    })(apiName, implName);
+  });
+
+  return stub;
+}(_));
+
+
+
 //TODO: Need to create a better logger; Need to find an elegant way to determine device
-var JQ = $
+var JQ = $;
 var JSONStoreUtil = JSONStoreUtil || {};
 
 /**
@@ -14,7 +53,7 @@ var JSONStoreUtil = JSONStoreUtil || {};
 Provides constants
 @private
 **/
-constant = (function() {
+var constant = (function() {
 
   'use strict';
 
@@ -277,10 +316,8 @@ JSONStoreUtil.check = (function(jQuery, underscore) {
 
   'use strict';
 
-  var _ = JSONStore_,
-
     //Support for isArray on older browsers
-  isArray = Array.isArray || function(obj) {
+  var isArray = Array.isArray || function(obj) {
       return Object.prototype.toString.call(obj) === '[object Array]';
     };
 
@@ -864,8 +901,7 @@ Provides support for setting up callbacks with events.
 JSONStoreUtil.callback = (function(jQuery) {
 
   'use strict';
-  var _ = JSONStore_,
-  check = JSONStoreUtil.check,
+  var check = JSONStoreUtil.check,
   /**
     Error object returned by rejected deferreds
     @private
@@ -969,9 +1005,7 @@ Provides a way to traverse JSON objects in JavaScript
 JSONStoreUtil.jspath = (function(jQuery) {
 
   'use strict';
-
-  var _ = JSONStore_,
-  check = JSONStoreUtil.check,
+  var check = JSONStoreUtil.check,
 
   __locate = function(element, key) {
 
@@ -1059,8 +1093,7 @@ JSONStoreUtil.findIterator = (function(underscore) {
 
   'use strict';
 
-  var _ = JSONStore_,
-  check = JSONStoreUtil.check,
+  var check = JSONStoreUtil.check,
 
   __inequalityComparator = function(value, index, list) {
       var self = this,
@@ -1237,7 +1270,7 @@ if (JSONStoreUtil.check.isDevice()) {
 
     
     var cdv = cordova,
-    _ = JSONStore_,
+    check = JSONStoreUtil.check,
 
       //constants
       STORAGE_PLUGIN = 'StoragePlugin',
@@ -1536,8 +1569,6 @@ if (JSONStoreUtil.check.isDevice()) {
     'use strict';
 
     var ls = localStorage,
-    _ = JSONStore_,
-    check = JSONStoreUtil.check,
 
       __genFullName = function(username, name) {
         return '' + username + '.' + name;
@@ -1790,8 +1821,7 @@ if (JSONStoreUtil.check.isDevice()) {
 
     'use strict';
 
-    var _ = JSONStore_,
-    check = JSONStoreUtil.check,
+    var check = JSONStoreUtil.check,
 
     __updatePath = function(oldPath, newItem) {
         var retStr;
@@ -1879,8 +1909,7 @@ if (JSONStoreUtil.check.isDevice()) {
   JSONStoreUtil.browser = (function(jQuery, underscore) {
 
     'use strict';
-    var _ = JSONStore_,
-    check = JSONStoreUtil.check;
+    var check = JSONStoreUtil.check;
 
     var Store = function(options) {
 
@@ -3666,7 +3695,7 @@ if (JSONStoreUtil.check.isDevice()) {
 /**
 Provides the API for storing JSON data locally, it may be linked to an adapter for data syncronization.
 **/
-_JSONStoreImpl = (function(jQuery, underscore) {
+var _JSONStoreImpl = (function(jQuery, underscore) {
 
   'use strict';
 
@@ -5560,3 +5589,4 @@ _JSONStoreImpl = (function(jQuery, underscore) {
   };
 
 }(JQ, _)); //JSONStore
+module.exports = JSONStore;
