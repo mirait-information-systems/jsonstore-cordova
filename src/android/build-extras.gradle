@@ -1,5 +1,5 @@
 dependencies {
-    compile ('com.ibm.mobilefirstplatform.clientsdk.android:jsonstore:1.0.0@aar'){
+    compile ('com.ibm.mobilefirstplatform.clientsdk.android:jsonstore:1.0.1@aar'){
     	transitive = true
     }
 }
