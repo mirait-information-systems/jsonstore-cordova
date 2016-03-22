@@ -1297,6 +1297,7 @@ if (JSONStoreUtil.check.isDevice()) {
       CHANGE_METHOD = 'change',
       CLEAR_METHOD = 'clear',
       FILE_INFO_METHOD = 'fileInfo',
+      ENCRYPTION_PLUGIN = 'encryption',
 
       __callNative = function(args, options, pluginName, nativeFunction) {
         cdv.exec(options.onSuccess, options.onFailure, pluginName, nativeFunction, args);
@@ -1311,6 +1312,10 @@ if (JSONStoreUtil.check.isDevice()) {
 
         __callNative([collection, data, options], options, STORAGE_PLUGIN, STORE_METHOD);
       },
+
+      _setEncryption = function(collection, data, options){
+         __callNative([collection, data, options], options, ENCRYPTION_PLUGIN, STORE_METHOD);
+       },
 
       _find = function(collection, query, options) {
 
@@ -1547,6 +1552,7 @@ if (JSONStoreUtil.check.isDevice()) {
       changePassword: _changePW,
       closeAll: _closeDatabase,
       destroy: _destroy,
+      setEncryption : _setEncryption,
       isKeyGenReq: _isKeyGenReq,
       startTransaction: _startTransaction,
       commitTransaction: _commitTransaction,
@@ -3420,6 +3426,10 @@ if (JSONStoreUtil.check.isDevice()) {
         });
       },
 
+      _setEncryption = function(options, encrypt){
+        console.log('Encryption is not supported in Web');
+      },
+
       _isKeyGenReq = function(username, callback) {
 
         //JavaScript-only implementation does not provide data encryption / security features
@@ -3680,6 +3690,7 @@ if (JSONStoreUtil.check.isDevice()) {
       changePassword: _changePW,
       closeAll: _closeDatabase,
       destroy: _destroy,
+      setEncryption : _setEncryption,
       isKeyGenReq: _isKeyGenReq,
       startTransaction: _startTransaction,
       commitTransaction: _commitTransaction,
@@ -4555,6 +4566,19 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
         return (PWD === null);
       }
 
+    },
+
+    /**
+      Enable encryption in JSONStore
+    */
+
+    _setEncryption = function(encrypt){
+        var deferred = $.Deferred(),
+          callbacks = __generateCallbacks(null, 'setEncryption', '', '', deferred);
+
+        db.setEncryption(callbacks, encrypt);
+
+        return deferred.promise();
     },
 
     /**
@@ -5579,6 +5603,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
     closeAll: _closeAll,
     documentify: _documentify,
     changePassword: _changePassword,
+    setEncryption: _setEncryption,
     destroy: _destroy,
     getErrorMessage: _getErrorMessage,
     startTransaction: _startTransaction,

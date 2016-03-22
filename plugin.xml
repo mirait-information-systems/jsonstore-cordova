@@ -66,6 +66,7 @@
         <source-file src="src/android/dispatchers/IsDirtyActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers"/>
         <source-file src="src/android/dispatchers/IsKeyGenRequiredActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
         <source-file src="src/android/dispatchers/LocalCountActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
+        <source-file src="src/android/dispatchers/SetEncryptionActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
 
         <source-file src="src/android/dispatchers/MarkCleanActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />
         <source-file src="src/android/dispatchers/ProvisionActionDispatcher.java" target-dir="src/com/jsonstore/dispatchers" />

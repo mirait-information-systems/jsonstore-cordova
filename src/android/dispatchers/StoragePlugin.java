@@ -21,42 +21,43 @@ import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaWebView;
 
 public class StoragePlugin extends DispatchingPlugin {
-
-     public StoragePlugin () {
-          // Initialize dispatchers.
-          super();
-     }
-
-     @Override
-     public void initialize (CordovaInterface cordova, CordovaWebView webView) {
-          super.initialize (cordova, webView);
-          
-          Activity activity = this.cordova.getActivity();
-          Context context = activity.getBaseContext();
-          
-          addDispatcher (new AllDirtyActionDispatcher(context));
-          addDispatcher (new ChangePasswordActionDispatcher(context));
-          addDispatcher (new CloseDatabaseActionDispatcher(context));
-          addDispatcher (new DestroyDBFileAndKeychainActionDispatcher(context));
-          addDispatcher (new DropTableActionDispatcher(context));
-          addDispatcher (new CountActionDispatcher(context));
-          addDispatcher (new FindActionDispatcher(context));
-          addDispatcher (new AdvancedFindActionDispatcher(context));
-          addDispatcher (new FindByIdActionDispatcher(context));
-          addDispatcher (new IsDirtyActionDispatcher(context));
-          addDispatcher (new IsKeyGenRequiredActionDispatcher(context));
-          addDispatcher (new LocalCountActionDispatcher(context));
-          addDispatcher (new MarkCleanActionDispatcher(context));
-          addDispatcher (new ProvisionActionDispatcher(context));
-          addDispatcher (new RemoveActionDispatcher(context));
-          addDispatcher (new ReplaceActionDispatcher(context));
-          addDispatcher (new StoreActionDispatcher(context));
-          addDispatcher (new StoreDPKActionDispatcher(context));
-          addDispatcher (new ClearActionDispatcher(context));
-          addDispatcher (new ChangeActionDispatcher(context));
-          addDispatcher (new FileInfoActionDispatcher(context));
-          addDispatcher (new StartTransactionActionDispatcher(context));
-          addDispatcher (new CommitTransactionActionDispatcher(context));
-          addDispatcher (new RollbackTransactionActionDispatcher(context));
-     }
+    
+    public StoragePlugin () {
+        // Initialize dispatchers.
+        super();
+    }
+    
+    @Override
+    public void initialize (CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize (cordova, webView);
+        
+        Activity activity = this.cordova.getActivity();
+        Context context = activity.getBaseContext();
+        
+        addDispatcher (new AllDirtyActionDispatcher(context));
+        addDispatcher (new ChangePasswordActionDispatcher(context));
+        addDispatcher (new CloseDatabaseActionDispatcher(context));
+        addDispatcher (new DestroyDBFileAndKeychainActionDispatcher(context));
+        addDispatcher (new DropTableActionDispatcher(context));
+        addDispatcher (new CountActionDispatcher(context));
+        addDispatcher (new FindActionDispatcher(context));
+        addDispatcher (new AdvancedFindActionDispatcher(context));
+        addDispatcher (new FindByIdActionDispatcher(context));
+        addDispatcher (new IsDirtyActionDispatcher(context));
+        addDispatcher (new IsKeyGenRequiredActionDispatcher(context));
+        addDispatcher (new LocalCountActionDispatcher(context));
+        addDispatcher (new MarkCleanActionDispatcher(context));
+        addDispatcher (new ProvisionActionDispatcher(context));
+        addDispatcher (new RemoveActionDispatcher(context));
+        addDispatcher (new ReplaceActionDispatcher(context));
+        addDispatcher (new StoreActionDispatcher(context));
+        addDispatcher (new StoreDPKActionDispatcher(context));
+        addDispatcher (new ClearActionDispatcher(context));
+        addDispatcher (new ChangeActionDispatcher(context));
+        addDispatcher (new FileInfoActionDispatcher(context));
+        addDispatcher (new StartTransactionActionDispatcher(context));
+        addDispatcher (new CommitTransactionActionDispatcher(context));
+        addDispatcher (new RollbackTransactionActionDispatcher(context));
+        addDispatcher (new SetEncryptionActionDispatcher(context));
+    }
 }
