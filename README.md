@@ -70,7 +70,7 @@ cordova platform add android
 Run the following command from your Cordova application's root directory to add the ibm-mfp-core plugin:
 
 ```Bash
-cordova plugin add cordova-plugin-jsonstore
+cordova plugin add https://github.com/ibm-bluemix-mobile-services/jsonstore-cordova
 ```
 
 You can check if the plugin installed successfully by running the following command, which lists your installed Cordova plugins:

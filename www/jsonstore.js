@@ -13,6 +13,7 @@ var JSONStore = (function(_) {
     'usePassword',
     'clearPassword',
     'closeAll',
+    'setEncryption',
     'documentify',
     'changePassword',
     'destroy',
@@ -1297,7 +1298,7 @@ if (JSONStoreUtil.check.isDevice()) {
       CHANGE_METHOD = 'change',
       CLEAR_METHOD = 'clear',
       FILE_INFO_METHOD = 'fileInfo',
-      ENCRYPTION_PLUGIN = 'encryption',
+      ENCRYPTION_METHOD = 'encryption',
 
       __callNative = function(args, options, pluginName, nativeFunction) {
         cdv.exec(options.onSuccess, options.onFailure, pluginName, nativeFunction, args);
@@ -1313,8 +1314,8 @@ if (JSONStoreUtil.check.isDevice()) {
         __callNative([collection, data, options], options, STORAGE_PLUGIN, STORE_METHOD);
       },
 
-      _setEncryption = function(collection, data, options){
-         __callNative([collection, data, options], options, ENCRYPTION_PLUGIN, STORE_METHOD);
+      _setEncryption = function(options, encrypt){
+         __callNative([encrypt], options, STORAGE_PLUGIN, ENCRYPTION_METHOD);
        },
 
       _find = function(collection, query, options) {
@@ -4574,7 +4575,8 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
 
     _setEncryption = function(encrypt){
         var deferred = $.Deferred(),
-          callbacks = __generateCallbacks(null, 'setEncryption', '', '', deferred);
+          options,
+          callbacks = __generateCallbacks(options, 'setEncryption', '', '', deferred);
 
         db.setEncryption(callbacks, encrypt);
 
@@ -4976,13 +4978,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
 
             } else {
 
-                cordova.exec(function(res) {
-                    collectionOptions.secureRandom = '' + res;
-                    db.provision(collectionName, collectionsearchFields, collectionOptions);
-                }, function(){
-                        callbacks.onFailure(constant.COULD_NOT_GET_SECURE_KEY);
-                        return constant.COULD_NOT_GET_SECURE_KEY;
-                }, 'WLApp', 'secureRandom', [32]);
+                    db.provision(collectionName, collectionsearchFields, collectionOptions); 
             }
           });
 
