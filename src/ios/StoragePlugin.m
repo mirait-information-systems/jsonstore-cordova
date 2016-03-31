@@ -1,12 +1,14 @@
 /*
- * IBM Confidential OCO Source Materials
- *
- * 5725-I43 Copyright IBM Corp. 2006, 2013
- *
- * The source code for this program is not published or otherwise
- * divested of its trade secrets, irrespective of what has
- * been deposited with the U.S. Copyright Office.
- *
+ *     Copyright 2016 IBM Corp.
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
  */
 
 #if ! __has_feature(objc_arc)
@@ -14,14 +16,7 @@
 #endif
 
 #import "StoragePlugin.h"
-#import "JSONStore.h"
-#import "JSONStore+Private.h"
-#import "JSONStoreSecurityManager.h"
-#import "JSONStoreConstants.h"
-#import "JSONStoreLogger.h"
-#import "JSONStoreQueryPart.h"
-#import "JSONStoreValidator.h"
-#import "JSONStoreCollection+Private.h"
+#import <JSONStore/JSONStoreFramework.h>
 
 @implementation StoragePlugin
 
@@ -70,7 +65,7 @@
                 
                 ops.username = username;
                 ops.password = password;
-                ops.analytics = analytics;
+                //ops.analytics = analytics;
                 
                 /* Feature removed from Altair
                 ops.requireOperatingSystemSecurity = osSecurity;
@@ -97,7 +92,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -105,6 +100,29 @@
             
             [self.commandDelegate sendPluginResult:pluginResult
                                         callbackId:command.callbackId];
+        });
+    }];
+}
+
+-(void)encrypt:(CDVInvokedUrlCommand*)command
+{
+    [self.commandDelegate runInBackground:^{
+        
+        dispatch_sync(self.operationQueue, ^{
+            BOOL encrypt = command.arguments[0];
+            CDVPluginResult * pluginResult = nil;
+            
+            @try{
+                [[JSONStore sharedInstance] setEncryption:encrypt];
+            }@catch(NSException *exception){
+                NSLog(@"Exception: %@", exception);
+                
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
+                                                    messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
+            }
+            [self.commandDelegate sendPluginResult:pluginResult
+                                        callbackId:command.callbackId];
+            
         });
     }];
 }
@@ -129,7 +147,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception: %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -186,7 +204,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception: %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -304,7 +322,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception: %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -387,7 +405,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception: %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -451,7 +469,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception: %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -511,7 +529,7 @@
                 
             } @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -573,7 +591,7 @@
                 
             } @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -619,7 +637,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -684,7 +702,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -734,7 +752,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -780,7 +798,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -816,7 +834,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+               NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -864,7 +882,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -912,7 +930,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -955,7 +973,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -1001,7 +1019,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -1048,7 +1066,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -1103,7 +1121,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -1142,7 +1160,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -1182,7 +1200,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -1221,7 +1239,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -1258,7 +1276,7 @@
             }
             @catch (NSException *exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
@@ -1299,7 +1317,7 @@
             }
             @catch(NSException* exception) {
                 
-                JSONStoreLoggerException(exception);
+                NSLog(@"Exception : %@", exception);
                 
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                     messageAsInt:JSON_STORE_PERSISTENT_STORE_FAILURE];
