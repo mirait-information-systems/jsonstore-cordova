@@ -479,17 +479,17 @@ cordova build android
         // Match all records that contain the search string on both sides.
         // %searchString%
         var arr1 = JSONStore.QueryPart().like('name', 'ca');  // returns {name: 'carlos', age: 10}
-        var arr2 = WL.JSONStore.QueryPart().like('name', 'los');  // returns {name: 'carlos', age: 10}
+        var arr2 = JSONStore.QueryPart().like('name', 'los');  // returns {name: 'carlos', age: 10}
 
         // Match all records that contain the search string on the left side and anything on the right side.
         // searchString%
-        var arr1 = WL.JSONStore.QueryPart().rightLike('name', 'ca');  // returns {name: 'carlos', age: 10}
-        var arr2 = WL.JSONStore.QueryPart().rightLike('name', 'los');  // returns nothing
+        var arr1 = JSONStore.QueryPart().rightLike('name', 'ca');  // returns {name: 'carlos', age: 10}
+        var arr2 = JSONStore.QueryPart().rightLike('name', 'los');  // returns nothing
 
         // Match all records that contain the search string on the right side and anything on the left side.
         // %searchString
-        var arr = WL.JSONStore.QueryPart().leftLike('name', 'ca');  // returns nothing
-        var arr2 = WL.JSONStore.QueryPart().leftLike('name', 'los');  // returns {name: 'carlos', age: 10}
+        var arr = JSONStore.QueryPart().leftLike('name', 'ca');  // returns nothing
+        var arr2 = JSONStore.QueryPart().leftLike('name', 'los');  // returns {name: 'carlos', age: 10}
 ```
 # License
 
