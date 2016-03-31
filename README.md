@@ -99,9 +99,63 @@ cordova build android
 ```
 
 
+### 5. Security
+#### Configuring your iOS environment
+
+1. Add the following files to your `Link Binary with Libraries` in `Build Phases`:
+
+```Bash
+	SQLCipher.framework
+	libSQLCipherDatabase.a
+```
+#### Configuring your Android enviroment
+
+1. Add the following files to your `libs` or `jniLibs` folder:
+
+```Bash
+	jsonstore_encrypt.jar	
+	sqlcipher.jar
+	 |-armeabi
+	 	-libdatabase_sqlcipher.so
+	 	-libsqlcipher_android.so
+	 	-libstlport_shared.so
+	 	- libuvpn.so
+ 	 |-x86
+ 	 	-libdatabase_sqlcipher.so
+	 	-libsqlcipher_android.so
+	 	-libstlport_shared.so
+	 	- libuvpn.so
+```
+
+2. Add the following to your `build.gradle` within the `dependencies` block.
+
+```Bash
+	 compile fileTree(dir: 'libs', include: ['*.jar'])
+```
+
+3. Add the following to your `assets` directory.
+
+```Bash
+	icudt46l.zip	
+	 |-armeabi
+	 	-libcrypto.so.1.0.0.zip
+	 	-libcrypto.so.1.0.0.zip
+	 	-libstlport_shared.so
+ 	 |-x86
+ 		-libcrypto.so.1.0.0.zip
+	 	-libcrypto.so.1.0.0.zip
+```
+
+
+
+
+
+
 #### API References
 
-**Note on Security**: By default security has been disabled so please review this blog post to enable its usage in JSONStore.
+**Note on Security**: 
+
+
 
 
 
