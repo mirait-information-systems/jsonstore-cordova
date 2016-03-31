@@ -100,7 +100,12 @@ cordova build android
 
 
 ### 5. Security
+
+**Note on Security**: By default security is disabled and if you wish to use it please follow the instructions below.
+
 #### Configuring your iOS environment
+
+
 
 1. Add the following files to your `Link Binary with Libraries` in `Build Phases`:
 
@@ -147,21 +152,14 @@ cordova build android
 ```
 
 
-
-
-
-
 #### API References
-
-**Note on Security**: 
-
-
-
 
 
 1. Initialize and open connections, get an Accessor, and add data
 
-        var collectionName = 'people';
+```Javascript
+
+		var collectionName = 'people';
         
         // Object that defines all the collections.
         var collections = {
@@ -199,9 +197,11 @@ cordova build android
         .fail(function (errorObject) {
             // Handle failure for any of the previous JSONStore operations (init, add).
         });
+```
         
 2. Find - locate documents inside the Store
     
+```Javascript
         var collectionName = 'people';
 
         // Find all documents that match the queries.
@@ -233,9 +233,10 @@ cordova build android
             .fail(function (errorObject) {
                 // Handle failure.
             });
+```
             
 3. Replace - change the documents that are already stored inside a Collection
-
+```Javascript
         var collectionName = 'people';
         
         // Documents will be located with their '_id' field 
@@ -255,9 +256,12 @@ cordova build android
             .fail(function (errorObject) {
                 // Handle failure.
             }); 
+            
+```
 
 4. Remove - delete all documents that match the query
 
+```Javascript
         var collectionName = 'people';
         // Remove all documents that match the queries.
         var queries = [{_id: 1}];
@@ -277,10 +281,11 @@ cordova build android
                 .fail(function (errorObject) {
                     // Handle failure.
                 });
-                
+ ```            
                 
 5. Count - gets the total number of documents that match a query
     
+```Javascript
         var collectionName = 'people';
         // Count all documents that match the query.
         // The default query is '{}' which will 
@@ -299,8 +304,12 @@ cordova build android
                 .fail(function (errorObject) {
                     // Handle failure.
                 });
+```
                 
 6. Destroy - wipes data for all users, destroys the internal storage, and clears security artifacts
+
+
+```Javascript
 
         JSONStore.destroy()
             .then(function () {
@@ -309,9 +318,18 @@ cordova build android
             .fail(function (errorObject) {
                 // Handle failure.
             });
-            
-7. Security - close access to all opened Collections for the current user
+```
 
+7. Security - enable encryption
+
+```Javascript
+		JSONStore.setEncryption(true);
+```
+ 
+           
+8. Security - close access to all opened Collections for the current user
+
+```Javascript
         JSONStore.closeAll()
             .then(function () {
                 // Handle success.
@@ -319,9 +337,11 @@ cordova build android
             .fail(function (errorObject) {
                 // Handle failure.
             }); 
+ ```
 
-8. Security - change the password that is used to access a Store
-    
+9. Security - change the password that is used to access a Store
+   
+ ```Javascript 
         // The password should be user input. 
         // It is hard-coded in the example for brevity.
         var oldPassword = '123';
@@ -347,8 +367,10 @@ cordova build android
                 // Handle failure.
             }); 
             
-9. Check whether a document is dirty
-
+ ```
+ 
+10. Check whether a document is dirty
+```Javascript
         var collectionName = 'people';
         var doc = {_id: 1, json: {name: 'hoshikata', age: 99}};
 
@@ -361,9 +383,10 @@ cordova build android
                 .fail(function (errorObject) {
                     // Handle failure.
                 });
+ ```
                 
-10. Check the number of dirty documents
-
+11. Check the number of dirty documents
+```Javascript
         var collectionName = 'people';
         JSONStore.get(collectionName)  
             .countAllDirty()
@@ -372,10 +395,11 @@ cordova build android
                 })
                 .fail(function (errorObject) {
                     // Handle failure.
-                });
+                });   
+```             
                 
-11. Remove a collection
-
+12. Remove a collection. 
+```Javascript
         var collectionName = 'people';
 
         JSONStore.get(collectionName)
@@ -388,10 +412,13 @@ cordova build android
                 .fail(function (errorObject) {
                     // Handle failure.
                 });
+ ```
                 
-12. Clear all data that is in a collection
+13. Clear all data that is in a collection
 
-        var collectionName = 'people';
+```Javascript
+
+       var collectionName = 'people';
         JSONStore.get(collectionName)
             .clear()
                 .then(function () {
@@ -402,9 +429,11 @@ cordova build android
                 .fail(function (errorObject) {
                     // Handle failure.
                 }); 
+```
                 
 13. Start a transaction, add some data, remove a document, commit the transaction and roll back the transaction if there is a failure
 
+```Javascript
         JSONStore.startTransaction()
             .then(function () {
                 // Handle startTransaction success.
@@ -432,9 +461,10 @@ cordova build android
                         // Handle rollback failure.
                     })
             });
+```
             
 15. Get file information
-
+```Javascript
         JSONStore.fileInfo()
             .then(function (res) {
                 //res => [{isEncrypted : true, name : kyo, size : 3072}]
@@ -442,9 +472,10 @@ cordova build android
             .fail(function () {
                 // Handle failure.
             }); 
+ ```
             
 16. Search with like, rightLike, and leftLike
-    
+ ```Javascript   
         // Match all records that contain the search string on both sides.
         // %searchString%
         var arr1 = JSONStore.QueryPart().like('name', 'ca');  // returns {name: 'carlos', age: 10}
@@ -459,7 +490,7 @@ cordova build android
         // %searchString
         var arr = WL.JSONStore.QueryPart().leftLike('name', 'ca');  // returns nothing
         var arr2 = WL.JSONStore.QueryPart().leftLike('name', 'los');  // returns {name: 'carlos', age: 10}
-
+```
 # License
 
 This project is licensed under the terms of the Apache 2 license.
