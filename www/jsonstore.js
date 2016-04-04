@@ -1576,6 +1576,7 @@ if (JSONStoreUtil.check.isDevice()) {
     'use strict';
 
     var ls = localStorage,
+    check = JSONStoreUtil.check,
 
       __genFullName = function(username, name) {
         return '' + username + '.' + name;
