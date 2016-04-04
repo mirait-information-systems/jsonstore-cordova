@@ -101,7 +101,7 @@ cordova build android
 
 ### 5. Security
 
-**Note on Security**: By default security is disabled and if you wish to use it please follow the instructions below.
+**Note on Security**: By default security is disabled and if you wish to use it please follow the instructions below. You can retrieve the files needed by extacting them from **jsonstore_encryption.zip**.
 
 #### Configuring your iOS environment
 
@@ -148,11 +148,10 @@ cordova build android
 	icudt46l.zip	
 	 |-armeabi
 	 	-libcrypto.so.1.0.0.zip
-	 	-libcrypto.so.1.0.0.zip
-	 	-libstlport_shared.so
+	 	-libssl.so.1.0.0.zip
  	 |-x86
  		-libcrypto.so.1.0.0.zip
-	 	-libcrypto.so.1.0.0.zip
+	 	-libssl.so.1.0.0.zip
 ```
 
 
