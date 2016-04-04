@@ -115,11 +115,15 @@ cordova build android
 ```
 #### Configuring your Android enviroment
 
-1. Add the following files to your `libs` or `jniLibs` folder:
+1. Add the following files to your `libs` 
 
 ```Bash
 	jsonstore_encrypt.jar	
 	sqlcipher.jar
+```
+
+2. Add the following files to your `jniLibs`
+```Bash
 	 |-armeabi
 	 	-libdatabase_sqlcipher.so
 	 	-libsqlcipher_android.so
@@ -132,13 +136,13 @@ cordova build android
 	 	- libuvpn.so
 ```
 
-2. Add the following to your `build.gradle` within the `dependencies` block.
+3. Add the following to your `build.gradle` within the `dependencies` block.
 
 ```Bash
 	 compile fileTree(dir: 'libs', include: ['*.jar'])
 ```
 
-3. Add the following to your `assets` directory.
+4. Add the following to your `assets` directory.
 
 ```Bash
 	icudt46l.zip	
