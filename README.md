@@ -155,7 +155,7 @@ cordova build android
 #### API References
 
 
-1. Initialize and open connections, get an Accessor, and add data
+*Initialize and open connections, get an Accessor, and add data*
 
 ```Javascript
 
@@ -199,7 +199,7 @@ cordova build android
         });
 ```
         
-2. Find - locate documents inside the Store
+*Find - locate documents inside the Store*
     
 ```Javascript
         var collectionName = 'people';
@@ -224,18 +224,18 @@ cordova build android
         // Alternatives:
         // - findById(1, options) which locates documents by their _id field
         // - findAll(options) which returns all documents
-        // - find({'name': 'nana', age: 10}, options) which finds all documents
+        // - find({'name': 'ayumu', age: 10}, options) which finds all documents
         // that match the query.
             .advancedFind([queryPart1], options)
                 .then(function (arrayResults) {
-                    // arrayResults = [{_id: 1, json: {name: 'carlos', age: 99}}]
+                    // arrayResults = [{_id: 1, json: {name: 'ayumu', age: 10}}]
             })
             .fail(function (errorObject) {
                 // Handle failure.
             });
 ```
             
-3. Replace - change the documents that are already stored inside a Collection
+*Replace - change the documents that are already stored inside a Collection*
 ```Javascript
         var collectionName = 'people';
         
@@ -259,7 +259,7 @@ cordova build android
             
 ```
 
-4. Remove - delete all documents that match the query
+*Remove - delete all documents that match the query*
 
 ```Javascript
         var collectionName = 'people';
@@ -283,7 +283,7 @@ cordova build android
                 });
  ```            
                 
-5. Count - gets the total number of documents that match a query
+*Count - gets the total number of documents that match a query*
     
 ```Javascript
         var collectionName = 'people';
@@ -306,7 +306,7 @@ cordova build android
                 });
 ```
                 
-6. Destroy - wipes data for all users, destroys the internal storage, and clears security artifacts
+*Destroy - wipes data for all users, destroys the internal storage, and clears security artifacts*
 
 
 ```Javascript
@@ -320,14 +320,14 @@ cordova build android
             });
 ```
 
-7. Security - enable encryption
+*Security - enable encryption*
 
 ```Javascript
 		JSONStore.setEncryption(true);
 ```
  
            
-8. Security - close access to all opened Collections for the current user
+*Security - close access to all opened Collections for the current user*
 
 ```Javascript
         JSONStore.closeAll()
@@ -339,7 +339,7 @@ cordova build android
             }); 
  ```
 
-9. Security - change the password that is used to access a Store
+*Security - change the password that is used to access a Store*
    
  ```Javascript 
         // The password should be user input. 
@@ -369,7 +369,7 @@ cordova build android
             
  ```
  
-10. Check whether a document is dirty
+*Check whether a document is dirty*
 ```Javascript
         var collectionName = 'people';
         var doc = {_id: 1, json: {name: 'hoshikata', age: 99}};
@@ -385,7 +385,7 @@ cordova build android
                 });
  ```
                 
-11. Check the number of dirty documents
+*Check the number of dirty documents*
 ```Javascript
         var collectionName = 'people';
         JSONStore.get(collectionName)  
@@ -398,7 +398,7 @@ cordova build android
                 });   
 ```             
                 
-12. Remove a collection. 
+*Remove a collection.* 
 ```Javascript
         var collectionName = 'people';
 
@@ -414,7 +414,7 @@ cordova build android
                 });
  ```
                 
-13. Clear all data that is in a collection
+*Clear all data that is in a collection*
 
 ```Javascript
 
@@ -431,7 +431,7 @@ cordova build android
                 }); 
 ```
                 
-13. Start a transaction, add some data, remove a document, commit the transaction and roll back the transaction if there is a failure
+*Start a transaction, add some data, remove a document, commit the transaction and roll back the transaction if there is a failure*
 
 ```Javascript
         JSONStore.startTransaction()
@@ -463,7 +463,7 @@ cordova build android
             });
 ```
             
-15. Get file information
+*Get file information*
 ```Javascript
         JSONStore.fileInfo()
             .then(function (res) {
@@ -474,7 +474,7 @@ cordova build android
             }); 
  ```
             
-16. Search with like, rightLike, and leftLike
+*Search with like, rightLike, and leftLike*
  ```Javascript   
         // Match all records that contain the search string on both sides.
         // %searchString%
