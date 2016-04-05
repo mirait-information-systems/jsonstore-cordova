@@ -21,7 +21,7 @@ To create a Cordova application, use the Cordova Plugin for JSONStore SDK:
 
 ### 1. Creating a Cordova application
 
-1. Run the following commands to create a new Cordova application. Alternatively you can use an existing application as well. 
+1. Run  the following commands to create a new Cordova application. Alternatively you can use an existing application as well. 
 
 	```
 	$ cordova create {appName}
