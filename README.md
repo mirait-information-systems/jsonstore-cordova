@@ -63,6 +63,8 @@ Run the following commands for the platforms that you want to add to your Cordov
 cordova platform add ios
 
 cordova platform add android
+
+cordova platform add windows
 ```
 
 ### 3. Adding Cordova plugin
@@ -96,6 +98,13 @@ cordova build ios
 
 ```Bash
 cordova build android
+```
+
+
+#### Configuring your Windows Phone Enviroment
+1. Build your Windows project by running the following command:
+```Bash
+	cordova build windows
 ```
 
 
