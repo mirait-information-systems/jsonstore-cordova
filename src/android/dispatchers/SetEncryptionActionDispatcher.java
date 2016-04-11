@@ -23,7 +23,7 @@ import org.apache.cordova.PluginResult;
 
 public class SetEncryptionActionDispatcher extends BaseActionDispatcher {
     private static final String PARAM_ENCRYPT = "encrypt";
-    private static final DISPATCHER_NAME = "encryption";
+    private static final String DISPATCHER_NAME = "encryption";
     
     public SetEncryptionActionDispatcher(android.content.Context context) {
         // These paramaters are NOT loggable since they contain password information

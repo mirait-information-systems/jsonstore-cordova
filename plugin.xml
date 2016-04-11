@@ -116,7 +116,10 @@
         <source-file src="src/windows/lib/JSONStoreSecurityManager.cs"/>
         <source-file src="src/windows/lib/JSONStoreSQLLite.cs"/>
 
-        <framework src="src/windows/shared/JSONStoreWin8.winmd" target="all" custom="true" />
+        <source-file src="src/windows/lib/SQLite.cs"/>
+        <source-file src="src/windows/lib/SQLiteAsync.cs"/>
+
+        <framework src="src/windows/shared/Newtonsoft.Json.dll" target="all" custom="true" />
     </platform>
 
 </plugin>
