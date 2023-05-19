@@ -36,5 +36,8 @@
       "name": "Anton Aleksandrov",
       "email": "antona@us.ibm.com"
     }
-  ]
+  ],
+  "dependencies": {
+    "xcode": "^3.0.1"
+  }
 }
