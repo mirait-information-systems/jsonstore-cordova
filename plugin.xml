@@ -3,8 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
     <name>JSONStore</name>
     <js-module name="JQuery" src="www/libs/jquery.js">
-        <clobbers target="jQuery" />
-        <clobbers target="$" />
+        <clobbers target="JSONStoreJQ" />
     </js-module>
 
      <js-module name="_" src="www/libs/jsonstore_lodash.js">
