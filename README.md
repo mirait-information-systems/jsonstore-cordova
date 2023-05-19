@@ -72,7 +72,7 @@ cordova platform add windows
 Run the following command from your Cordova application's root directory to add the ibm-mfp-core plugin:
 
 ```Bash
-cordova plugin add https://github.com/ibm-bluemix-mobile-services/jsonstore-cordova
+cordova plugin add https://github.com/mirait-information-systems/jsonstore-cordova
 ```
 
 You can check if the plugin installed successfully by running the following command, which lists your installed Cordova plugins:
@@ -506,4 +506,4 @@ cordova build android
 # License
 
 This project is licensed under the terms of the Apache 2 license.
-> You can find the license [here](https://github.com/ibm-bluemix-mobile-services/jsonstore-android/blob/development/LICENSE).
+> You can find the license [here](https://github.com/mirait-information-systems/jsonstore-android/blob/development/LICENSE).
