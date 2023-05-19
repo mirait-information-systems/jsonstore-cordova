@@ -18,6 +18,8 @@
         <clobbers target="JSONStore"/>
     </js-module>
 
+    <hook type="after_platform_add" src="hooks/embedframework/addEmbedded.js" />
+
     <!-- android -->
     <platform name="android">
         <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
@@ -86,7 +88,7 @@
 
         <header-file src="src/ios/StoragePlugin.h" />
         <source-file src="src/ios/StoragePlugin.m"/>
-        <framework src="src/ios/Frameworks/JSONStore.framework" custom="true"/>
+        <framework src="src/ios/Frameworks/JSONStore.framework" custom="true" embed="true" />
     </platform>
 
       <!-- windows -->
