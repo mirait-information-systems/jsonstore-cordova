@@ -43,7 +43,7 @@ var JSONStore = (function(_) {
 
 
 //TODO: Need to create a better logger; Need to find an elegant way to determine device
-var JQ = $;
+var JQ = JSONStoreJQ;
 var JSONStoreUtil = JSONStoreUtil || {};
 
 /**
@@ -685,7 +685,7 @@ JSONStoreUtil.check = (function(jQuery, underscore) {
     var cloneOb1 = _.cloneDeep(obj1);
     var cloneOb2 = _.cloneDeep(obj2);
 
-    return $.extend(cloneOb1, cloneOb2);
+    return jQuery.extend(cloneOb1, cloneOb2);
 
   };
 
@@ -939,7 +939,7 @@ JSONStoreUtil.callback = (function(jQuery) {
       }
 
       //Send the WL/JSONSTORE/SUCCESS event
-      $(document.body).trigger(events.success, [data, src, collectionName, more, username]);
+      jQuery(document.body).trigger(events.success, [data, src, collectionName, more, username]);
 
       //Call the user provided callback if there is one
       if (check.isObject(options) && check.isFunction(options.onSuccess)) {
@@ -977,7 +977,7 @@ JSONStoreUtil.callback = (function(jQuery) {
       console.error("PKG - " + constant.PKG_NAME + " " + JSON.stringify(realErrorObject))
 
       //Send the WL/JSONSTORE/FAILURE event
-      $(document.body).trigger(events.failure, [data, src, collectionName, more, username]);
+      jQuery(document.body).trigger(events.failure, [data, src, collectionName, more, username]);
 
       //Call the user provided callback if there is one
       if (check.isObject(options) && check.isFunction(options.onFailure)) {
@@ -1022,7 +1022,7 @@ JSONStoreUtil.jspath = (function(jQuery) {
             parentPath.push(currentKey);
           }
 
-          $.map(curretValue, function(v, k) {
+          jQuery.map(curretValue, function(v, k) {
 
             if (key === k) {
               arr.push({
@@ -1348,7 +1348,7 @@ if (JSONStoreUtil.check.isDevice()) {
 
       _clean = function(collection, documents) {
         //The method was changed to use promises instead of callbacks.
-        var deferred = $.Deferred(),
+        var deferred = jQuery.Deferred(),
           options = {
             onSuccess: function(rc) {
               deferred.resolve(rc);
@@ -1583,7 +1583,7 @@ if (JSONStoreUtil.check.isDevice()) {
       },
 
       __dropFirst = function(username, name, options) {
-        var deferred = $.Deferred();
+        var deferred = jQuery.Deferred();
 
         if (check.isBoolean(options.dropCollection) && options.dropCollection) {
           //drop the collection first
@@ -1599,7 +1599,7 @@ if (JSONStoreUtil.check.isDevice()) {
       },
 
       __init = function(username, name) {
-        var deferred = $.Deferred();
+        var deferred = jQuery.Deferred();
 
         _read(username, name)
 
@@ -1620,7 +1620,7 @@ if (JSONStoreUtil.check.isDevice()) {
 
       _fileSize = function(usernames, names) {
         var sizes = [],
-          deferred = $.Deferred(),
+          deferred = jQuery.Deferred(),
           arr = [],
           len = usernames.length;
 
@@ -1628,7 +1628,7 @@ if (JSONStoreUtil.check.isDevice()) {
           arr.push(_read(usernames[x], names[x]));
         }
 
-        $.when.apply($, arr)
+        jQuery.when.apply(jQuery, arr)
 
         .done(function() {
           for (var x = 0; x < len; x++) {
@@ -1646,7 +1646,7 @@ if (JSONStoreUtil.check.isDevice()) {
       },
 
       _provision = function(username, name, options) {
-        var deferred = $.Deferred();
+        var deferred = jQuery.Deferred();
         options = options || {};
 
         __dropFirst(username, name, options)
@@ -1667,7 +1667,7 @@ if (JSONStoreUtil.check.isDevice()) {
       },
 
       _write = function(username, name, data) {
-        var deferred = $.Deferred();
+        var deferred = jQuery.Deferred();
 
         setTimeout(function() {
           ls.setItem(__genFullName(username, name), JSON.stringify(data));
@@ -1678,7 +1678,7 @@ if (JSONStoreUtil.check.isDevice()) {
       },
 
       _read = function(username, name) {
-        var deferred = $.Deferred(),
+        var deferred = jQuery.Deferred(),
           ret;
 
         setTimeout(function() {
@@ -1690,7 +1690,7 @@ if (JSONStoreUtil.check.isDevice()) {
       },
 
       _readAll = function() {
-        var deferred = $.Deferred(),
+        var deferred = jQuery.Deferred(),
           metas = [],
           collectionNames = [],
           metaKeys = [],
@@ -1737,7 +1737,7 @@ if (JSONStoreUtil.check.isDevice()) {
       },
 
       _clearKey = function(username, name) {
-        var deferred = $.Deferred();
+        var deferred = jQuery.Deferred();
 
         setTimeout(function() {
           ls.removeItem(__genFullName(username, name));
@@ -1748,7 +1748,7 @@ if (JSONStoreUtil.check.isDevice()) {
       },
 
       _destroy = function(store) {
-        var deferred = $.Deferred(),
+        var deferred = jQuery.Deferred(),
         metaKeys = [],
         metaKey,
         collectionKey,
@@ -1940,7 +1940,7 @@ if (JSONStoreUtil.check.isDevice()) {
 
       saveStoreMetadata: function() {
         var that = this,
-          deferred = $.Deferred(),
+          deferred = jQuery.Deferred(),
           name = constant.METADATA_TAG;
 
         //We don't want the username here, it's a custom thing for the metadata
@@ -1959,7 +1959,7 @@ if (JSONStoreUtil.check.isDevice()) {
 
       readStoreMetadata: function(username) {
         var that = this,
-          deferred = $.Deferred();
+          deferred = jQuery.Deferred();
 
         storage.read(username, constant.METADATA_TAG)
 
@@ -1976,7 +1976,7 @@ if (JSONStoreUtil.check.isDevice()) {
       },
 
       getAllStoreMetadata: function() {
-        var deferred = $.Deferred();
+        var deferred = jQuery.Deferred();
 
         storage.readAll()
 
@@ -2017,7 +2017,7 @@ if (JSONStoreUtil.check.isDevice()) {
 
       refresh: function(collection) {
         var that = this,
-          deferred = $.Deferred();
+          deferred = jQuery.Deferred();
 
         storage.read(this.metadata.username, collection)
 
@@ -2099,7 +2099,7 @@ if (JSONStoreUtil.check.isDevice()) {
 
       __ensureStoreOpen = function(pwHash, user) {
         //Make sure the store has been opened.
-        var deferred = $.Deferred();
+        var deferred = jQuery.Deferred();
 
         if (!store.isStoreOpen()) {
 
@@ -2161,7 +2161,7 @@ if (JSONStoreUtil.check.isDevice()) {
       },
 
       __provisionPreprocessor = function(options) {
-        var deferred = $.Deferred(),
+        var deferred = jQuery.Deferred(),
           pwHash;
 
         if (check.isString(options.collectionPassword) && !_.isEmpty(options.collectionPassword)) {
@@ -2224,11 +2224,11 @@ if (JSONStoreUtil.check.isDevice()) {
 
           if (!__searchFieldsMatch(searchFields, collection)) {
             store.removeOpened(result.name);
-            return $.Deferred().reject(constant.PROVISION_TABLE_SEARCH_FIELDS_MISMATCH);
+            return jQuery.Deferred().reject(constant.PROVISION_TABLE_SEARCH_FIELDS_MISMATCH);
           }
 
           //Open existing collection, backwards compatible with initCollection
-          return $.Deferred().resolve(1);
+          return jQuery.Deferred().resolve(1);
         }
       },
 
@@ -2264,7 +2264,7 @@ if (JSONStoreUtil.check.isDevice()) {
           sfKeys = [],
           operation = options.isAdd ? 'add' : '',
           dirty = options.isAdd ? new Date() : 0,
-          deferred = $.Deferred();
+          deferred = jQuery.Deferred();
 
         sfKeys = _.keys(store.collections[collection].searchFields);
 
@@ -2645,7 +2645,7 @@ if (JSONStoreUtil.check.isDevice()) {
           reversedData = [],
           retData = [],
           clonesReturn,
-          deferred = $.Deferred(),
+          deferred = jQuery.Deferred(),
           clones = [],
           l,
           ctx = {
@@ -2681,7 +2681,7 @@ if (JSONStoreUtil.check.isDevice()) {
 
         retData = __queryProcessor(ctx);
 
-        clones = _.cloneDeep(retData); //31% faster than $.extend(true, [], retData)
+        clones = _.cloneDeep(retData); //31% faster than jQuery.extend(true, [], retData)
 
         clonesReturn = _sort(clones, options, deferred);
 
@@ -2803,7 +2803,7 @@ if (JSONStoreUtil.check.isDevice()) {
           }
         });
 
-        clones = _.cloneDeep(retData); //31% faster than $.extend(true, [], retData)
+        clones = _.cloneDeep(retData); //31% faster than jQuery.extend(true, [], retData)
 
         options.onSuccess(clones);
       },
@@ -2870,7 +2870,7 @@ if (JSONStoreUtil.check.isDevice()) {
 
         retData = __queryProcessorAdv(ctx);
 
-        clones = _.cloneDeep(retData); //31% faster than $.extend(true, [], retData)
+        clones = _.cloneDeep(retData); //31% faster than jQuery.extend(true, [], retData)
 
         clonesReturned = _sort(clones, options);
         options.onSuccess(clonesReturned);
@@ -3160,7 +3160,7 @@ if (JSONStoreUtil.check.isDevice()) {
       },
 
       _clean = function(collection, docs) {
-        var deferred = $.Deferred();
+        var deferred = jQuery.Deferred();
 
         if (!store.isOpen(collection)) {
 
@@ -3499,7 +3499,7 @@ if (JSONStoreUtil.check.isDevice()) {
           _.each(keys, function(value) {
             writes.push(storage.write(store.metadata.username, value, store.collections[value]));
           });
-          $.when.apply(this, writes)
+          jQuery.when.apply(this, writes)
             .then(function() {
               callbacks.onSuccess(0);
             })
@@ -3569,7 +3569,7 @@ if (JSONStoreUtil.check.isDevice()) {
                 });
               } else {
 
-                var deferred = $.Deferred();
+                var deferred = jQuery.Deferred();
                 setTimeout(function() {
                   deferred.resolve(0);
                 }, 0);
@@ -3585,7 +3585,7 @@ if (JSONStoreUtil.check.isDevice()) {
                   markDirty: ctx.markDirty
                 });
               } else {
-                var deferred = $.Deferred();
+                var deferred = jQuery.Deferred();
                 setTimeout(function() {
                   deferred.resolve(0);
                 }, 0);
@@ -4011,7 +4011,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       */
     __push = function(options, name, username, adapter, doc) {
 
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         collectionAdapter = adapter,
         collectionName = name,
         usr = username || '',
@@ -4059,7 +4059,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
             }));
           }
 
-          $.when.apply($, arr).then(function() {
+          jQuery.when.apply(jQuery, arr).then(function() {
 
             var args = Array.prototype.slice.call(arguments);
             var errors = [];
@@ -4094,7 +4094,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
                   var rc = constant.COULD_NOT_MARK_DOCUMENT_PUSHED;
                   callbacks.onFailure(rc);
 
-                  $.extend(errObject, {
+                  jQuery.extend(errObject, {
                     err: rc,
                     msg: JSONStore.getErrorMessage(rc),
                     doc: badDoc
@@ -4214,7 +4214,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       */
     __store = function(name, username, searchFields, additionalSearchFields, data, options) {
 
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         arrayOfObjects = __getDataArray(data),
         usr = username || '',
         callbacks = __generateCallbacks(options, 'store', name, usr, deferred),
@@ -4253,7 +4253,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       */
     __replace = function(name, username, doc, options) {
 
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         arrayOfQueries = __getQueryArray(doc, {
           idOnly: false,
           isQueryValid: false
@@ -4283,7 +4283,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       */
     __remove = function(name, username, searchFields, additionalSearchFields, doc, options) {
 
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         arrayOfQueries = __getQueryArray(doc, {
           idOnly: true,
           idArray : true,
@@ -4436,7 +4436,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       */
     __find = function(name, username, query, searchFields, additionalSearchFields, options) {
 
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         queries,
         callbacks = __generateCallbacks(options, 'find', name, username || '', deferred);
 
@@ -4473,7 +4473,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       */
     _startTransaction = function() {
 
-      var dfd = $.Deferred(),
+      var dfd = jQuery.Deferred(),
         callbacks = __generateCallbacks(null, 'startTransaction', '', '', dfd);
 
       db.startTransaction(callbacks);
@@ -4483,7 +4483,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
 
     _commitTransaction = function() {
 
-      var dfd = $.Deferred(),
+      var dfd = jQuery.Deferred(),
         callbacks = __generateCallbacks(null, 'commitTransaction', '', '', dfd);
 
       db.commitTransaction(callbacks);
@@ -4493,7 +4493,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
 
     _rollbackTransaction = function() {
 
-      var dfd = $.Deferred(),
+      var dfd = jQuery.Deferred(),
         callbacks = __generateCallbacks(null, 'rollbackTransaction', '', '', dfd);
 
       db.rollbackTransaction(callbacks);
@@ -4503,7 +4503,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
 
     _fileInfo = function() {
 
-      var dfd = $.Deferred(),
+      var dfd = jQuery.Deferred(),
         callbacks = __generateCallbacks(null, 'fileInfo', '', '', dfd);
 
       db.fileInfo(callbacks);
@@ -4575,7 +4575,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
     */
 
     _setEncryption = function(encrypt){
-        var deferred = $.Deferred(),
+        var deferred = jQuery.Deferred(),
           options,
           callbacks = __generateCallbacks(options, 'setEncryption', '', '', deferred);
 
@@ -4591,7 +4591,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
 
       COLLECTIONS = {};
 
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         callbacks = __generateCallbacks(options, 'closeAll', '', '', deferred);
 
       db.closeAll(callbacks);
@@ -4604,7 +4604,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       */
     _changePassword = function(oldPW, newPW, user, options) {
 
-      var deferred = $.Deferred();
+      var deferred = jQuery.Deferred();
 
       //Preserve legacy signature of changePassword(oldPW, newPW, options)
       var opts = {
@@ -4676,7 +4676,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
         options = optionsOrUsername;
       }
 
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         callbacks = __generateCallbacks(options, 'destroy', '', '', deferred);
 
       db.destroy(callbacks, username);
@@ -4716,7 +4716,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
         COLLECTIONS = {};
       }
       var arrp = [],
-        def = $.Deferred(),
+        def = jQuery.Deferred(),
         col,
         first,
         firstPromise,
@@ -4799,7 +4799,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
               }
             }
 
-            $.when.apply(this, arrp)
+            jQuery.when.apply(this, arrp)
 
             .done(function() {
               def.resolve(COLLECTIONS);
@@ -4822,7 +4822,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
     _provisionCollection = function(name, searchFields, options) {
 
       var instance,
-        deferred = $.Deferred(),
+        deferred = jQuery.Deferred(),
         collectionAdapter,
         collectionName = '',
         username = constant.DEFAULT_USERNAME,
@@ -5090,7 +5090,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       */
     advancedFind: function(query, options) {
 
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         callbacks = __generateCallbacks(options, 'advancedFind', this.name, this.username, deferred);
 
       callbacks = _.extend(callbacks, options);
@@ -5112,7 +5112,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
 
     findById: function(id, options) {
 
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         callbacks = __generateCallbacks(options, 'findById', this.name, this.username, deferred),
         callNative = false,
         param = [],
@@ -5310,7 +5310,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       */
     isPushRequired: function(doc, options) {
 
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         arrayOfQueries = __getQueryArray(doc, {
           idOnly: true,
           isQueryValid: false
@@ -5333,7 +5333,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       */
     getPushRequired: function(options) {
 
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         callbacks = __generateCallbacks(options, 'getPushRequired', this.name, this.username, deferred);
 
       db.allDirty(this.name, [], callbacks);
@@ -5353,7 +5353,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       */
     pushRequiredCount: function(options) {
 
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         callbacks = __generateCallbacks(options, 'pushRequiredCount', this.name, this.username, deferred);
 
       db.pushRequiredCount(this.name, callbacks);
@@ -5373,7 +5373,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       query = query || {};
       options = options || {};
 
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         callbacks = __generateCallbacks(query, 'count', this.name, this.username, deferred);
 
       query = _.omit(query, 'onSuccess', 'onFailure');
@@ -5391,7 +5391,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       Removes the collection locally.
       */
     removeCollection: function(options) {
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         callbacks = __generateCallbacks(options, 'removeCollection', this.name, this.username, deferred);
 
       db.removeCollection(this.name, callbacks);
@@ -5403,7 +5403,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       Removes all data in the collection and re-inits with same indexes (search fields, additional SFs)
       */
     clear: function(options) {
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         callbacks = __generateCallbacks(options, 'clear', this.name, this.username, deferred);
 
       db.clear(this.name, callbacks);
@@ -5419,7 +5419,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       options = options || {};
       var lowerCaseReplaceCriteria = [];
 
-      var deferred = $.Deferred(),
+      var deferred = jQuery.Deferred(),
         callbacks = __generateCallbacks(options, 'change', this.name, this.username, deferred);
 
       //addNew is false by default
@@ -5487,7 +5487,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       if (check.isArrayOfCleanDocuments(documents)) {
         return db.markpushed(this.name, documents);
       } else {
-        deferred = $.Deferred();
+        deferred = jQuery.Deferred();
         callbacks = __generateCallbacks(options, 'markClean', this.name, this.username, deferred);
         setTimeout(function() {
           callbacks.onFailure(constant.BAD_PARAMETER_EXPECTED_ARRAY_OF_CLEAN_DOCUMENTS);
@@ -5528,7 +5528,7 @@ var _JSONStoreImpl = (function(jQuery, underscore) {
       var col = this,
         output = {},
         options = {},
-        deferred = $.Deferred();
+        deferred = jQuery.Deferred();
 
       if (check.isUndefined(limit) && check.isUndefined(offset)) {
 
