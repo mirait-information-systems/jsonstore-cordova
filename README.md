@@ -189,7 +189,7 @@ cordova build android
             password : '123',
         };
 
-        JSONStore.init(collections, options)
+        WL.JSONStore.init(collections, options)
             .then(function () {
                 // Data to add, you probably want to get
                 // this data from a network call
@@ -201,7 +201,7 @@ cordova build android
                     markDirty: true
                 };
                 // Get an accessor to the people collection and add data.
-                return JSONStore.get(collectionName).add(data, addOptions);
+                return WL.JSONStore.get(collectionName).add(data, addOptions);
         })
         .then(function (numberOfDocumentsAdded) {
             // Add was successful.
@@ -217,7 +217,7 @@ cordova build android
         var collectionName = 'people';
 
         // Find all documents that match the queries.
-        var queryPart1 = JSONStore.QueryPart()
+        var queryPart1 = WL.JSONStore.QueryPart()
                    .equal('name', 'ayumu')
                    .lessOrEqualThan('age', 10)
 
@@ -232,7 +232,7 @@ cordova build android
             sort: [{name: constant.ASCENDING}, {age: constant.DESCENDING}]
         };
         
-        JSONStore.get(collectionName)
+        WL.JSONStore.get(collectionName)
         // Alternatives:
         // - findById(1, options) which locates documents by their _id field
         // - findAll(options) which returns all documents
@@ -260,7 +260,7 @@ cordova build android
             markDirty: true
         };
 
-        JSONStore.get(collectionName)
+        WL.JSONStore.get(collectionName)
             .replace(docs, options)
                 .then(function (numberOfDocumentsReplaced) {
                     // Handle success.
@@ -285,7 +285,7 @@ cordova build android
             markDirty: true
         };
 
-        JSONStore.get(collectionName)
+        WL.JSONStore.get(collectionName)
             .remove(queries, options)
                 .then(function (numberOfDocumentsRemoved) {
                     // Handle success.
@@ -308,7 +308,7 @@ cordova build android
             exact: true
         };
 
-        JSONStore.get(collectionName)
+        WL.JSONStore.get(collectionName)
             .count(query, options)
                 .then(function (numberOfDocumentsThatMatchedTheQuery) {
                     // Handle success.
@@ -323,7 +323,7 @@ cordova build android
 
 ```Javascript
 
-        JSONStore.destroy()
+        WL.JSONStore.destroy()
             .then(function () {
                 // Handle success.
             })
@@ -335,14 +335,14 @@ cordova build android
 *Security - enable encryption*
 
 ```Javascript
-		JSONStore.setEncryption(true);
+		WL.JSONStore.setEncryption(true);
 ```
  
            
 *Security - close access to all opened Collections for the current user*
 
 ```Javascript
-        JSONStore.closeAll()
+        WL.JSONStore.closeAll()
             .then(function () {
                 // Handle success.
             })
@@ -367,7 +367,7 @@ cordova build android
         // Default username if none is passed is: 'jsonstore'.
         var username = 'kenshin';
 
-        JSONStore.changePassword(oldPassword, newPassword, username)
+        WL.JSONStore.changePassword(oldPassword, newPassword, username)
             .then(function () {
                 // Make sure you do not leave the password(s) in memory.
                 clearPasswords();
@@ -386,7 +386,7 @@ cordova build android
         var collectionName = 'people';
         var doc = {_id: 1, json: {name: 'hoshikata', age: 99}};
 
-        JSONStore.get(collectionName)  
+        WL.JSONStore.get(collectionName)  
             .isDirty(doc)
                 .then(function (isDocumentDirty) {
                     // Handle success.
@@ -400,7 +400,7 @@ cordova build android
 *Check the number of dirty documents*
 ```Javascript
         var collectionName = 'people';
-        JSONStore.get(collectionName)  
+        WL.JSONStore.get(collectionName)  
             .countAllDirty()
                 .then(function (numberOfDirtyDocuments) {
                     // Handle success.
@@ -414,7 +414,7 @@ cordova build android
 ```Javascript
         var collectionName = 'people';
 
-        JSONStore.get(collectionName)
+        WL.JSONStore.get(collectionName)
             .removeCollection()
                 .then(function () {
                     // Handle success.
@@ -431,7 +431,7 @@ cordova build android
 ```Javascript
 
        var collectionName = 'people';
-        JSONStore.get(collectionName)
+        WL.JSONStore.get(collectionName)
             .clear()
                 .then(function () {
                     // Handle success.
@@ -446,26 +446,26 @@ cordova build android
 *Start a transaction, add some data, remove a document, commit the transaction and roll back the transaction if there is a failure*
 
 ```Javascript
-        JSONStore.startTransaction()
+        WL.JSONStore.startTransaction()
             .then(function () {
                 // Handle startTransaction success.
                 // You can call every JSONStore API method except:
                 // init, destroy, removeCollection, and closeAll.
 
                 var data = [{name: 'junko'}];
-                return JSONStore.get(collectionName).add(data);
+                return WL.JSONStore.get(collectionName).add(data);
             })
             .then(function () {
                     var docs = [{_id: 1, json: {name: 'junko'}}];
-                    return JSONStore.get(collectionName).remove(docs);
+                    return WL.JSONStore.get(collectionName).remove(docs);
             })
             .then(function () {
-                return JSONStore.commitTransaction();
+                return WL.JSONStore.commitTransaction();
             })
             .fail(function (errorObject) {
                 // Handle failure for any of the previous JSONStore operation.
                 //(startTransaction, add, remove).
-                JSONStore.rollbackTransaction()
+                WL.JSONStore.rollbackTransaction()
                     .then(function () {
                         // Handle rollback success.
                     })
@@ -477,7 +477,7 @@ cordova build android
             
 *Get file information*
 ```Javascript
-        JSONStore.fileInfo()
+        WL.JSONStore.fileInfo()
             .then(function (res) {
                 //res => [{isEncrypted : true, name : kyo, size : 3072}]
             })
@@ -490,18 +490,18 @@ cordova build android
  ```Javascript   
         // Match all records that contain the search string on both sides.
         // %searchString%
-        var arr1 = JSONStore.QueryPart().like('name', 'ca');  // returns {name: 'carlos', age: 10}
-        var arr2 = JSONStore.QueryPart().like('name', 'los');  // returns {name: 'carlos', age: 10}
+        var arr1 = WL.JSONStore.QueryPart().like('name', 'ca');  // returns {name: 'carlos', age: 10}
+        var arr2 = WL.JSONStore.QueryPart().like('name', 'los');  // returns {name: 'carlos', age: 10}
 
         // Match all records that contain the search string on the left side and anything on the right side.
         // searchString%
-        var arr1 = JSONStore.QueryPart().rightLike('name', 'ca');  // returns {name: 'carlos', age: 10}
-        var arr2 = JSONStore.QueryPart().rightLike('name', 'los');  // returns nothing
+        var arr1 = WL.JSONStore.QueryPart().rightLike('name', 'ca');  // returns {name: 'carlos', age: 10}
+        var arr2 = WL.JSONStore.QueryPart().rightLike('name', 'los');  // returns nothing
 
         // Match all records that contain the search string on the right side and anything on the left side.
         // %searchString
-        var arr = JSONStore.QueryPart().leftLike('name', 'ca');  // returns nothing
-        var arr2 = JSONStore.QueryPart().leftLike('name', 'los');  // returns {name: 'carlos', age: 10}
+        var arr = WL.JSONStore.QueryPart().leftLike('name', 'ca');  // returns nothing
+        var arr2 = WL.JSONStore.QueryPart().leftLike('name', 'los');  // returns {name: 'carlos', age: 10}
 ```
 # License
 

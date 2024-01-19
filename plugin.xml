@@ -15,7 +15,7 @@
     </js-module>
 
     <js-module name="JSONStore" src="www/jsonstore.js">
-        <clobbers target="JSONStore"/>
+        <clobbers target="WL.JSONStore"/>
     </js-module>
 
     <hook type="after_platform_add" src="hooks/embedframework/addEmbedded.js" />
